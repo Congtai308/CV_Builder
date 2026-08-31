@@ -1892,33 +1892,22 @@ a {
     flex-direction: column;
   }
 
-  @media (max-width: 600px) {
-    .resume-preview-container {
-      width: 100%;
-      overflow: hidden;
-  
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-  
-      padding: 20px 0 40px;
-    }
-  
-    .harvard-resume {
-      width: 794px;
-      min-height: 1123px;
-  
-      transform: scale(
-        clamp(0.38, calc((100vw - 20px) / 794), 0.72)
-      );
-  
-      transform-origin: top center;
-  
-      margin-left: auto;
-      margin-right: auto;
-  
-      margin-bottom: -280px;
-    }
+  .resume-preview-container {
+    padding: 20px 10px 50px;
+  }
+
+  .harvard-resume {
+    width: 794px;
+
+    min-height: 1123px;
+
+    transform: scale(
+      0.72
+    );
+
+    transform-origin: top center;
+
+    margin-bottom: -300px;
   }
   .save-indicator {
     color: #16a365;
@@ -2149,88 +2138,19 @@ a {
 
 /* CTA */
 
+
+/* RESPONSIVE */
+
 @media (max-width: 850px) {
+  .portfolio-card-wrapper {
+    transform: scale(0.72) !important;
+  }
+
   .portfolio-ring {
     width: 420px;
     height: 420px;
   }
-
-  .portfolio-content {
-    padding: 40px 16px;
-  }
-
-  .portfolio-card-wrapper {
-    max-width: 100%;
-  }
 }
-
-@media (max-width: 600px) {
-  .portfolio-toolbar {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 14px 12px;
-  }
-
-  .portfolio-brand {
-    order: -1;
-    width: 100%;
-    font-size: 28px;
-    letter-spacing: 0.18em;
-    text-align: center;
-  }
-
-  .portfolio-toolbar > .portfolio-toolbar-left {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .portfolio-cta-inline,
-  .portfolio-guide-link {
-    width: 100%;
-    padding: 10px 8px;
-    text-align: center;
-    font-size: 11px;
-  }
-
-  .portfolio-mode-toggle {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px;
-  }
-
-  .portfolio-mode {
-    width: 100%;
-    min-width: 0;
-    padding: 0 6px;
-    font-size: 10px;
-  }
-
-  .portfolio-content {
-    width: 100%;
-    padding: 30px 10px 50px;
-    overflow: hidden;
-  }
-
-  .portfolio-card-wrapper {
-    width: 100%;
-    max-width: 100%;
-    transform: none !important;
-  }
-
-  .portfolio-ring {
-    width: 300px;
-    height: 300px;
-  }
-
-  .portfolio-platform {
-    width: 180px;
-  }
-}
-
 /* =========================================================
    PORTFOLIO TOOLBAR
 ========================================================= */
@@ -2688,29 +2608,4 @@ a {
 .guide-cta {
   margin-top: 32px;
   text-align: center;
-}
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-img,
-svg,
-video {
-  max-width: 100%;
-}
-
-input,
-textarea,
-select,
-button {
-  max-width: 100%;
 }
