@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   FaUser,
@@ -27,7 +27,7 @@ type Tab =
   | "projects"
   | "skills";
 
-export default function ResumeBuilder() {
+function ResumeBuilder() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -1432,5 +1432,24 @@ function EmptyState({
 
       <p>{description}</p>
     </div>
+  );
+}
+/*
+ * =========================================================
+ * EXPORT DEFAULT — bọc Suspense vì dùng useSearchParams
+ * =========================================================
+ */
+
+export default function BuilderPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="builder-loading">
+          <p>Đang tải CV...</p>
+        </div>
+      }
+    >
+      <ResumeBuilder />
+    </Suspense>
   );
 }
