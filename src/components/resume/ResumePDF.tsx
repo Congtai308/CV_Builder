@@ -459,6 +459,19 @@ export default function ResumePDF({ resume }: Props) {
             )}
           </PDFSection>
         )}
+        {/* CERTIFICATIONS */}
+
+        {resume.certifications.length > 0 && (
+          <PDFSection title="CERTIFICATIONS">
+            {resume.certifications.map((cert) => (
+              <Text style={styles.skill} key={cert.id}>
+                {normalizeText(cert.name)}
+                {cert.issuer && ` — ${normalizeText(cert.issuer)}`}
+                {cert.year && ` (${cert.year})`}
+              </Text>
+            ))}
+          </PDFSection>
+        )}
       </Page>
     </Document>
   );

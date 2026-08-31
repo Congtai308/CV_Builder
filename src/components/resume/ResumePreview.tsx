@@ -9,36 +9,26 @@ import {
 } from "react-icons/fa";
 
 import { ResumeData } from "@/lib/resume/types";
-import { normalizeText } from "@/lib/resume/normalize"
+import { normalizeText } from "@/lib/resume/normalize";
 interface Props {
   resume: ResumeData;
 }
 
-export default function ResumePreview({
-  resume,
-}: Props) {
+export default function ResumePreview({ resume }: Props) {
   return (
     <article className="harvard-resume">
-
       {/* =================================================
           HEADER
       ================================================= */}
 
       <header className="harvard-header">
-
-        <h1>
-          {resume.personal.name ||
-            "Your Name"}
-        </h1>
+        <h1>{resume.personal.name || "Your Name"}</h1>
 
         {resume.personal.title && (
-          <div className="harvard-title">
-            {resume.personal.title}
-          </div>
+          <div className="harvard-title">{resume.personal.title}</div>
         )}
 
         <div className="harvard-contact">
-
           {resume.personal.location && (
             <span>
               <FaMapMarkerAlt />
@@ -48,7 +38,7 @@ export default function ResumePreview({
 
           {resume.personal.email && (
             <span>
-             
+              <FaEnvelope />
               {resume.personal.email}
             </span>
           )}
@@ -63,9 +53,7 @@ export default function ResumePreview({
           {resume.personal.website && (
             <a
               href={
-                resume.personal.website.startsWith(
-                  "http"
-                )
+                resume.personal.website.startsWith("http")
                   ? resume.personal.website
                   : `https://${resume.personal.website}`
               }
@@ -80,9 +68,7 @@ export default function ResumePreview({
           {resume.personal.github && (
             <a
               href={
-                resume.personal.github.startsWith(
-                  "http"
-                )
+                resume.personal.github.startsWith("http")
                   ? resume.personal.github
                   : `https://${resume.personal.github}`
               }
@@ -97,9 +83,7 @@ export default function ResumePreview({
           {resume.personal.linkedin && (
             <a
               href={
-                resume.personal.linkedin.startsWith(
-                  "http"
-                )
+                resume.personal.linkedin.startsWith("http")
                   ? resume.personal.linkedin
                   : `https://${resume.personal.linkedin}`
               }
@@ -110,9 +94,7 @@ export default function ResumePreview({
               LinkedIn
             </a>
           )}
-
         </div>
-
       </header>
 
       {/* =================================================
@@ -121,11 +103,7 @@ export default function ResumePreview({
 
       {resume.summary && (
         <HarvardSection title="SUMMARY">
-
-          <p className="harvard-summary">
-            {resume.summary}
-          </p>
-
+          <p className="harvard-summary">{resume.summary}</p>
         </HarvardSection>
       )}
 
@@ -135,55 +113,31 @@ export default function ResumePreview({
 
       {resume.education.length > 0 && (
         <HarvardSection title="EDUCATION">
+          {resume.education.map((education) => (
+            <div className="harvard-entry" key={education.id}>
+              <div className="harvard-entry-header">
+                <div>
+                  <strong>{education.school || "University"}</strong>
 
-          {resume.education.map(
-            (education) => (
-              <div
-                className="harvard-entry"
-                key={education.id}
-              >
-
-                <div className="harvard-entry-header">
-
-                  <div>
-
-                    <strong>
-                      {education.school ||
-                        "University"}
-                    </strong>
-
-                    {education.degree && (
-                      <div className="harvard-subtitle">
-                        {education.degree}
-                      </div>
-                    )}
-
-                  </div>
-
-                  <div className="harvard-date">
-
-                    {education.endDate ||
-                      education.startDate}
-
-                    {education.location &&
-                      ` | ${education.location}`}
-
-                  </div>
-
+                  {education.degree && (
+                    <div className="harvard-subtitle">{education.degree}</div>
+                  )}
                 </div>
 
-                {education.description && (
-                  <ul>
-                    <li>
-                      {education.description}
-                    </li>
-                  </ul>
-                )}
+                <div className="harvard-date">
+                  {education.endDate || education.startDate}
 
+                  {education.location && ` | ${education.location}`}
+                </div>
               </div>
-            )
-          )}
 
+              {education.description && (
+                <ul>
+                  <li>{education.description}</li>
+                </ul>
+              )}
+            </div>
+          ))}
         </HarvardSection>
       )}
 
@@ -193,71 +147,39 @@ export default function ResumePreview({
 
       {resume.experience.length > 0 && (
         <HarvardSection title="EXPERIENCE">
+          {resume.experience.map((experience) => (
+            <div className="harvard-entry" key={experience.id}>
+              <div className="harvard-entry-header">
+                <div>
+                  <strong>{experience.company || "Company Name"}</strong>
 
-          {resume.experience.map(
-            (experience) => (
-              <div
-                className="harvard-entry"
-                key={experience.id}
-              >
-
-                <div className="harvard-entry-header">
-
-                  <div>
-
-                    <strong>
-                      {experience.company ||
-                        "Company Name"}
-                    </strong>
-
-                    {experience.position && (
-                      <div className="harvard-subtitle italic">
-                        {experience.position}
-                      </div>
-                    )}
-
-                  </div>
-
-                  <div className="harvard-date">
-
-                    {experience.startDate ||
-                      ""}
-
-                    {experience.endDate &&
-                      ` – ${experience.endDate}`}
-
-                    {experience.location &&
-                      ` | ${experience.location}`}
-
-                  </div>
-
+                  {experience.position && (
+                    <div className="harvard-subtitle italic">
+                      {experience.position}
+                    </div>
+                  )}
                 </div>
 
-                {experience.description
-                  .filter(Boolean)
-                  .length > 0 && (
-                  <ul>
-                    {experience.description
-                      .filter(Boolean)
-                      .map(
-                        (
-                          description,
-                          index
-                        ) => (
-                          <li
-                            key={index}
-                          >
-                            {description}
-                          </li>
-                        )
-                      )}
-                  </ul>
-                )}
+                <div className="harvard-date">
+                  {experience.startDate || ""}
 
+                  {experience.endDate && ` – ${experience.endDate}`}
+
+                  {experience.location && ` | ${experience.location}`}
+                </div>
               </div>
-            )
-          )}
 
+              {experience.description.filter(Boolean).length > 0 && (
+                <ul>
+                  {experience.description
+                    .filter(Boolean)
+                    .map((description, index) => (
+                      <li key={index}>{description}</li>
+                    ))}
+                </ul>
+              )}
+            </div>
+          ))}
         </HarvardSection>
       )}
 
@@ -267,91 +189,56 @@ export default function ResumePreview({
 
       {resume.projects.length > 0 && (
         <HarvardSection title="PROJECTS">
+          {resume.projects.map((project) => (
+            <div className="harvard-entry" key={project.id}>
+              <div className="harvard-entry-header">
+                <div>
+                  <strong>
+                    {project.name || "Project Name"}
 
-          {resume.projects.map(
-            (project) => (
-              <div
-                className="harvard-entry"
-                key={project.id}
-              >
-
-                <div className="harvard-entry-header">
-
-                  <div>
-
-                    <strong>
-
-                      {project.name ||
-                        "Project Name"}
-
-                      {project.url && (
-                        <a
-                          className="project-link"
-                          href={
-                            project.url.startsWith(
-                              "http"
-                            )
-                              ? project.url
-                              : `https://${project.url}`
-                          }
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          <FaExternalLinkAlt />
-                        </a>
-                      )}
-
-                    </strong>
-
-                    {project.role && (
-                      <div className="harvard-subtitle italic">
-                        {project.role}
-                      </div>
+                    {project.url && (
+                      <a
+                        className="project-link"
+                        href={
+                          project.url.startsWith("http")
+                            ? project.url
+                            : `https://${project.url}`
+                        }
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <FaExternalLinkAlt />
+                      </a>
                     )}
+                  </strong>
 
-                  </div>
-
-                  <div className="harvard-date">
-
-                    {project.startDate}
-
-                    {project.endDate &&
-                      ` – ${project.endDate}`}
-
-                    {project.location &&
-                      ` | ${project.location}`}
-
-                  </div>
-
+                  {project.role && (
+                    <div className="harvard-subtitle italic">
+                      {project.role}
+                    </div>
+                  )}
                 </div>
 
-                {project.description
-                  .filter(Boolean)
-                  .length > 0 && (
-                  <ul>
+                <div className="harvard-date">
+                  {project.startDate}
 
-                    {project.description
-                      .filter(Boolean)
-                      .map(
-                        (
-                          description,
-                          index
-                        ) => (
-                          <li
-                            key={index}
-                          >
-                            {description}
-                          </li>
-                        )
-                      )}
+                  {project.endDate && ` – ${project.endDate}`}
 
-                  </ul>
-                )}
-
+                  {project.location && ` | ${project.location}`}
+                </div>
               </div>
-            )
-          )}
 
+              {project.description.filter(Boolean).length > 0 && (
+                <ul>
+                  {project.description
+                    .filter(Boolean)
+                    .map((description, index) => (
+                      <li key={index}>{description}</li>
+                    ))}
+                </ul>
+              )}
+            </div>
+          ))}
         </HarvardSection>
       )}
 
@@ -359,63 +246,60 @@ export default function ResumePreview({
           SKILLS
       ================================================= */}
 
-      {Object.values(resume.skills).some(
-        Boolean
-      ) && (
+      {Object.values(resume.skills).some(Boolean) && (
         <HarvardSection title="SKILLS">
-
           <div className="harvard-skills">
-
             {resume.skills.languages && (
               <div>
-                <strong>
-                  Languages:
-                </strong>{" "}
-                {resume.skills.languages}
+                <strong>Languages:</strong> {resume.skills.languages}
               </div>
             )}
 
             {resume.skills.frameworks && (
               <div>
-                <strong>
-                  Frameworks:
-                </strong>{" "}
-                {resume.skills.frameworks}
+                <strong>Frameworks:</strong> {resume.skills.frameworks}
               </div>
             )}
 
             {resume.skills.tools && (
               <div>
-                <strong>
-                  Tools:
-                </strong>{" "}
-                {resume.skills.tools}
+                <strong>Tools:</strong> {resume.skills.tools}
               </div>
             )}
 
             {resume.skills.databases && (
               <div>
-                <strong>
-                  Databases:
-                </strong>{" "}
-                {resume.skills.databases}
+                <strong>Databases:</strong> {resume.skills.databases}
               </div>
             )}
 
             {resume.skills.cloud && (
               <div>
-                <strong>
-                  Cloud:
-                </strong>{" "}
-                {resume.skills.cloud}
+                <strong>Cloud:</strong> {resume.skills.cloud}
               </div>
             )}
-
           </div>
-
         </HarvardSection>
       )}
+      {/* =================================================
+          CERTIFICATIONS
+      ================================================= */}
 
+      {resume.certifications.length > 0 && (
+        <HarvardSection title="CERTIFICATIONS">
+          <ul className="harvard-cert-list">
+            {resume.certifications.map((cert) => (
+              <li key={cert.id}>
+                {cert.name || "Certification Name"}
+
+                {cert.issuer && ` — ${cert.issuer}`}
+
+                {cert.year && ` (${cert.year})`}
+              </li>
+            ))}
+          </ul>
+        </HarvardSection>
+      )}
     </article>
   );
 }
@@ -435,13 +319,9 @@ function HarvardSection({
 }) {
   return (
     <section className="harvard-section">
-
-      <h2>
-        {title}
-      </h2>
+      <h2>{title}</h2>
 
       {children}
-
     </section>
   );
 }
