@@ -1927,7 +1927,7 @@ a {
 
 .portfolio-page {
   position: relative;
-  min-height: 40vh;
+  min-height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
   background: linear-gradient(160deg, #05060f, #0b0f24 45%, #0a0d1c);
@@ -2140,7 +2140,7 @@ a {
   margin: 0;
   position: relative;
   text-align: center;
-  font-size: 50px;
+  font-size: 42px;
   font-weight: 900;
   letter-spacing: 0.3em;
   background: linear-gradient(
