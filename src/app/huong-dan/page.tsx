@@ -52,15 +52,6 @@ export default function GuidePage() {
           </div>
         </section>
 
-        <section className="guide-audience">
-          <h2>Phù hợp với ai?</h2>
-          <p>
-            Sinh viên, người mới ra trường cần một CV gọn gàng, chuyên
-            nghiệp; hoặc bất kỳ ai đã có CV ở định dạng khác và muốn nhanh
-            chóng chuyển sang chuẩn Harvard mà không cần gõ lại từ đầu.
-          </p>
-        </section>
-
         <section className="guide-tip-highlight">
           <span className="guide-tip-badge">MẸO NHANH</span>
           <h2>Đã có CV rồi? Đừng gõ lại</h2>

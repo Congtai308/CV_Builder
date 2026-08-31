@@ -2567,29 +2567,6 @@ a {
   margin-bottom: 0;
 }
 
-.guide-audience {
-  background: #ffffff;
-  border: 1px solid #e4e7ec;
-  border-radius: 14px;
-  padding: 24px 28px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.guide-audience h2 {
-  margin: 0 0 10px;
-  font-size: 17px;
-  font-weight: 800;
-  color: #171923;
-}
-
-.guide-audience p {
-  margin: 0;
-  font-size: 14.5px;
-  line-height: 1.75;
-  color: #374151;
-}
-
 .guide-tip-highlight {
   background: linear-gradient(135deg, #111827, #1f2937);
   border-radius: 14px;
