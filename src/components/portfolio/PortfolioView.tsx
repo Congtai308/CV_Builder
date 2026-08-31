@@ -16,45 +16,49 @@ export default function PortfolioView({ resume }: Props) {
 
   return (
     <main className="portfolio-page">
-
       <PortfolioBackground />
-      
+
       <header className="portfolio-toolbar">
 
-        <Link href="/builder" className="portfolio-cta-inline">
-          + Tạo CV
-        </Link>
-        <h1 className="portfolio-brand">PORTFOLIO</h1>
-        <div className="portfolio-mode-toggle">
+  <div className="portfolio-toolbar-left">
+    <Link href="/builder" className="portfolio-cta-inline">
+      + Tạo CV
+    </Link>
 
-          <button
-            className={
-              previewMode === "web"
-                ? "portfolio-mode active"
-                : "portfolio-mode"
-            }
-            onClick={() => setPreviewMode("web")}
-          >
-            Web Preview
-          </button>
+    <Link href="/huong-dan" className="portfolio-guide-link">
+      Hướng dẫn
+    </Link>
+  </div>
 
-          <button
-            className={
-              previewMode === "pdf"
-                ? "portfolio-mode active"
-                : "portfolio-mode"
-            }
-            onClick={() => setPreviewMode("pdf")}
-          >
-            PDF View
-          </button>
+  <h1 className="portfolio-brand">PORTFOLIO</h1>
 
-        </div>
+  <div className="portfolio-mode-toggle">
+    <button
+      className={
+        previewMode === "web"
+          ? "portfolio-mode active"
+          : "portfolio-mode"
+      }
+      onClick={() => setPreviewMode("web")}
+    >
+      Web Preview
+    </button>
 
-      </header>
+    <button
+      className={
+        previewMode === "pdf"
+          ? "portfolio-mode active"
+          : "portfolio-mode"
+      }
+      onClick={() => setPreviewMode("pdf")}
+    >
+      PDF View
+    </button>
+  </div>
+
+</header>
 
       <div className="portfolio-content">
-
         {previewMode === "web" ? (
           <FloatingResume resume={resume} />
         ) : (
@@ -62,9 +66,7 @@ export default function PortfolioView({ resume }: Props) {
             <PDFPreview resume={resume} />
           </div>
         )}
-
       </div>
-
     </main>
   );
 }
