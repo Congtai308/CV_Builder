@@ -43,7 +43,7 @@ function ResumeBuilder() {
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [lastSaved, setLastSaved] = useState<string | null>(null);
-  const [editorWidth, setEditorWidth] = useState(400);
+  const [editorWidth, setEditorWidth] = useState(560);
   const [isResizing, setIsResizing] = useState(false);
   const [importing, setImporting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
