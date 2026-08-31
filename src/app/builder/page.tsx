@@ -9,6 +9,7 @@ import {
   FaBriefcase,
   FaProjectDiagram,
   FaTools,
+  FaCertificate,
 } from "react-icons/fa";
 import { HiArrowLeft } from "react-icons/hi";
 
@@ -18,14 +19,14 @@ import { ResumeData } from "@/lib/resume/types";
 import ResumePreview from "@/components/resume/ResumePreview";
 import PDFPreview from "@/components/resume/PDFPreview";
 
-
 type Tab =
   | "personal"
   | "summary"
   | "education"
   | "experience"
   | "projects"
-  | "skills";
+  | "skills"
+  | "certifications";
 
 function ResumeBuilder() {
   const router = useRouter();
@@ -437,20 +438,18 @@ function ResumeBuilder() {
     try {
       const { pdf } = await import("@react-pdf/renderer");
       const ResumePDF = (await import("@/components/resume/ResumePDF")).default;
-  
-      const blob = await pdf(
-        <ResumePDF resume={resume} />
-      ).toBlob();
-  
+
+      const blob = await pdf(<ResumePDF resume={resume} />).toBlob();
+
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
-  
+
       link.href = url;
       link.download = `${resume.personal.name || "Resume"}.pdf`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-  
+
       URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Download PDF error:", error);
@@ -523,6 +522,11 @@ function ResumeBuilder() {
       label: "Skills",
       icon: <FaTools />,
     },
+    {
+      id: "certifications" as Tab,
+      label: "Certifications",
+      icon: <FaCertificate />,
+    },
   ];
 
   /*
@@ -553,10 +557,7 @@ function ResumeBuilder() {
 
       <header className="builder-header no-print">
         <div className="builder-header-left">
-          <button
-            className="back-button"
-            onClick={() => router.push("/")}
-          >
+          <button className="back-button" onClick={() => router.push("/")}>
             <HiArrowLeft />
           </button>
 
@@ -588,12 +589,12 @@ function ResumeBuilder() {
             onClick={() => fileInputRef.current?.click()}
           >
             {importing ? (
-    <>
-      <span className="spinner" /> Đang đọc CV...
-    </>
-  ) : (
-    "Import PDF"
-  )}
+              <>
+                <span className="spinner" /> Đang đọc CV...
+              </>
+            ) : (
+              "Import PDF"
+            )}
           </button>
           <button className="secondary-button" onClick={createNewResume}>
             New CV
@@ -826,7 +827,9 @@ function ResumeBuilder() {
                             if (!confirmed) return;
                             setResume((prev) => ({
                               ...prev,
-                              education: prev.education.filter((_, i) => i !== index),
+                              education: prev.education.filter(
+                                (_, i) => i !== index
+                              ),
                             }));
                           }}
                         >
@@ -1328,7 +1331,112 @@ function ResumeBuilder() {
             )}
           </div>
         </section>
+        {/* =========================================
+                Certifications
+            ========================================= */}
+        {activeTab === "certifications" && (
+          <div className="form-view">
+            <div className="form-heading-row">
+              <div>
+                <p className="form-eyebrow">CERTIFICATIONS</p>
+                <h2>Certifications</h2>
+                <p>Add professional certifications and licenses.</p>
+              </div>
 
+              <button
+                className="add-main-button"
+                onClick={() =>
+                  setResume((prev) => ({
+                    ...prev,
+                    certifications: [
+                      ...prev.certifications,
+                      {
+                        id: crypto.randomUUID(),
+                        name: "",
+                        issuer: "",
+                        year: "",
+                      },
+                    ],
+                  }))
+                }
+              >
+                + Add Certification
+              </button>
+            </div>
+
+            {resume.certifications.length === 0 ? (
+              <EmptyState
+                title="No certifications added"
+                description="Add certifications that strengthen your profile."
+              />
+            ) : (
+              resume.certifications.map((cert, index) => (
+                <div className="form-card" key={cert.id}>
+                  <div className="card-header">
+                    <strong>Certification #{index + 1}</strong>
+
+                    <button
+                      className="remove-link"
+                      onClick={() => {
+                        const confirmed = window.confirm("Xóa mục này?");
+                        if (!confirmed) return;
+                        setResume((prev) => ({
+                          ...prev,
+                          certifications: prev.certifications.filter(
+                            (_, i) => i !== index
+                          ),
+                        }));
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </div>
+
+                  <div className="form-grid">
+                    <Input
+                      label="Certification Name"
+                      placeholder="AWS Certified Solutions Architect"
+                      value={cert.name}
+                      onChange={(value) =>
+                        setResume((prev) => {
+                          const copy = [...prev.certifications];
+                          copy[index] = { ...copy[index], name: value };
+                          return { ...prev, certifications: copy };
+                        })
+                      }
+                    />
+
+                    <Input
+                      label="Issuer"
+                      placeholder="Amazon Web Services"
+                      value={cert.issuer}
+                      onChange={(value) =>
+                        setResume((prev) => {
+                          const copy = [...prev.certifications];
+                          copy[index] = { ...copy[index], issuer: value };
+                          return { ...prev, certifications: copy };
+                        })
+                      }
+                    />
+
+                    <Input
+                      label="Year"
+                      placeholder="2025"
+                      value={cert.year}
+                      onChange={(value) =>
+                        setResume((prev) => {
+                          const copy = [...prev.certifications];
+                          copy[index] = { ...copy[index], year: value };
+                          return { ...prev, certifications: copy };
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        )}
         {/* =================================================
             RESIZER
         ================================================= */}
