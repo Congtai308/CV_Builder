@@ -578,7 +578,7 @@ function ResumeBuilder() {
 
       <header className="builder-header no-print">
         <div className="builder-header-left">
-          <button className="back-button" onClick={() => router.push("/")}>
+          <button className="back-button" onClick={() => router.push("/page.tsx")}>
             <HiArrowLeft />
           </button>
 
