@@ -2609,3 +2609,205 @@ a {
   margin-top: 32px;
   text-align: center;
 }
+/* =========================================================
+   RESPONSIVE — PORTFOLIO PAGE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .portfolio-toolbar {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .portfolio-toolbar > .portfolio-toolbar-left {
+    justify-self: center;
+    order: 2;
+  }
+
+  .portfolio-brand {
+    order: 1;
+    font-size: 22px;
+    letter-spacing: 0.15em;
+  }
+
+  .portfolio-toolbar > .portfolio-mode-toggle {
+    justify-self: center;
+    order: 3;
+  }
+
+  .portfolio-content {
+    padding: 30px 12px;
+  }
+
+  .portfolio-stage {
+    width: 100%;
+  }
+
+  .portfolio-card-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .portfolio-card {
+    width: 100%;
+  }
+
+  .portfolio-card .harvard-resume {
+    width: 100%;
+    max-width: 100%;
+    min-height: auto;
+    padding: 24px 18px;
+    font-size: 11px;
+  }
+
+  .portfolio-ring {
+    width: 340px;
+    height: 340px;
+  }
+
+  .portfolio-pdf-wrapper {
+    max-width: 100%;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .portfolio-toolbar-left {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .portfolio-cta-inline,
+  .portfolio-guide-link {
+    font-size: 11px;
+    padding: 8px 12px;
+  }
+
+  .portfolio-brand {
+    font-size: 17px;
+    letter-spacing: 0.08em;
+  }
+
+  .portfolio-mode {
+    height: 28px;
+    padding: 0 10px;
+    font-size: 10px;
+  }
+
+  .portfolio-card .harvard-resume {
+    padding: 18px 14px;
+    font-size: 10px;
+  }
+
+  .harvard-header h1 {
+    font-size: 20px;
+  }
+
+  .harvard-contact {
+    font-size: 9px;
+    gap: 3px;
+  }
+
+  .harvard-section h2 {
+    font-size: 11px;
+  }
+
+  .harvard-entry-header {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .harvard-date {
+    text-align: left;
+  }
+
+  .portfolio-side-panel {
+    display: none;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — GUIDE PAGE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .guide-content {
+    padding: 28px 16px 60px;
+  }
+
+  .guide-intro h1 {
+    font-size: 21px;
+  }
+
+  .guide-intro > p {
+    font-size: 13.5px;
+  }
+
+  .guide-purpose-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-section,
+  .guide-audience,
+  .guide-tip-highlight {
+    padding: 18px 18px;
+  }
+
+  .guide-section h2,
+  .guide-audience h2,
+  .guide-tip-highlight h2 {
+    font-size: 15.5px;
+  }
+
+  .guide-section p,
+  .guide-audience p,
+  .guide-tip-highlight p,
+  .guide-list li {
+    font-size: 13.5px;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — BUILDER HEADER BUTTONS ON MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .builder-header {
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 64px;
+    padding: 10px 12px;
+  }
+
+  .builder-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+
+  .builder-actions .secondary-button,
+  .builder-actions .primary-button,
+  .builder-actions .danger-button {
+    height: 32px;
+    padding: 0 10px;
+    font-size: 10px;
+  }
+
+  .save-indicator {
+    width: 100%;
+    text-align: right;
+    order: -1;
+  }
+
+}
