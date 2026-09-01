@@ -453,20 +453,30 @@ function ResumeBuilder() {
       const blob = await pdf(<ResumePDF resume={resume} />).toBlob();
 
       const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
+      const isMobileDevice =
+      /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
+    if (isMobileDevice) {
+      // Trên mobile, mở PDF trong tab mới — trình duyệt sẽ tự cho phép
+      // người dùng bấm nút "Chia sẻ" / "Lưu" từ trình xem PDF gốc.
+      window.open(url, "_blank");
+    } else {
+      const link = document.createElement("a");
       link.href = url;
       link.download = `${resume.personal.name || "Resume"}.pdf`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Download PDF error:", error);
-      alert("Không thể tải PDF. Vui lòng thử lại.");
     }
+
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+    }, 10000);
+  } catch (error) {
+    console.error("Download PDF error:", error);
+    alert("Không thể tải PDF. Vui lòng thử lại.");
   }
+}
 
   // xu ly keo tha
   function startResizing() {
