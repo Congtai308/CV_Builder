@@ -2811,3 +2811,73 @@ a {
   }
 
 }
+/* =========================================================
+   RESPONSIVE — PORTFOLIO EMPTY STATE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .portfolio-empty {
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .portfolio-empty p {
+    font-size: 13px;
+  }
+
+  .portfolio-cta-static {
+    font-size: 12px;
+    padding: 10px 18px;
+  }
+
+}
+/* =========================================================
+   RESPONSIVE — BUILDER TABS SCROLL ON SMALL SCREEN
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .editor-tab {
+    font-size: 9px;
+    padding: 0 8px;
+    height: 34px;
+  }
+
+  .editor-tab .tab-icon {
+    display: none;
+  }
+
+  .form-heading h2,
+  .form-heading-row h2 {
+    font-size: 17px;
+  }
+
+  .input-group input,
+  .input-group textarea {
+    font-size: 13px;
+  }
+
+  .bullet-input input {
+    font-size: 12px;
+  }
+
+  .add-main-button,
+  .add-small-button {
+    font-size: 11px;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — RESIZER DISABLED ON TOUCH DEVICES
+========================================================= */
+
+@media (max-width: 850px) and (hover: none) {
+
+  .builder-resizer {
+    display: none;
+  }
+
+}
