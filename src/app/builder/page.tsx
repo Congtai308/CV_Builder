@@ -50,6 +50,17 @@ function ResumeBuilder() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [savedId, setSavedId] = useState<string | null>(resumeId);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    function checkMobile() {
+      setIsMobile(window.innerWidth <= 850);
+    }
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
   /*
    * =========================================================
    * LOAD CV
@@ -630,9 +641,13 @@ function ResumeBuilder() {
 
       <main
         className="builder-main"
-        style={{
-          gridTemplateColumns: `${editorWidth}px 6px 1fr`,
-        }}
+        style={
+          isMobile
+            ? undefined
+            : {
+                gridTemplateColumns: `${editorWidth}px 6px 1fr`,
+              }
+        }
       >
         {/* =================================================
             LEFT 30%
@@ -1332,109 +1347,109 @@ function ResumeBuilder() {
             {/* =========================================
                 Certifications
             ========================================= */}
-        {activeTab === "certifications" && (
-          <div className="form-view">
-            <div className="form-heading-row">
-              <div>
-                <p className="form-eyebrow">CERTIFICATIONS</p>
-                <h2>Certifications</h2>
-                <p>Add professional certifications and licenses.</p>
-              </div>
-
-              <button
-                className="add-main-button"
-                onClick={() =>
-                  setResume((prev) => ({
-                    ...prev,
-                    certifications: [
-                      ...prev.certifications,
-                      {
-                        id: crypto.randomUUID(),
-                        name: "",
-                        issuer: "",
-                        year: "",
-                      },
-                    ],
-                  }))
-                }
-              >
-                + Add Certification
-              </button>
-            </div>
-
-            {resume.certifications.length === 0 ? (
-              <EmptyState
-                title="No certifications added"
-                description="Add certifications that strengthen your profile."
-              />
-            ) : (
-              resume.certifications.map((cert, index) => (
-                <div className="form-card" key={cert.id}>
-                  <div className="card-header">
-                    <strong>Certification #{index + 1}</strong>
-
-                    <button
-                      className="remove-link"
-                      onClick={() => {
-                        const confirmed = window.confirm("Xóa mục này?");
-                        if (!confirmed) return;
-                        setResume((prev) => ({
-                          ...prev,
-                          certifications: prev.certifications.filter(
-                            (_, i) => i !== index
-                          ),
-                        }));
-                      }}
-                    >
-                      Remove
-                    </button>
+            {activeTab === "certifications" && (
+              <div className="form-view">
+                <div className="form-heading-row">
+                  <div>
+                    <p className="form-eyebrow">CERTIFICATIONS</p>
+                    <h2>Certifications</h2>
+                    <p>Add professional certifications and licenses.</p>
                   </div>
 
-                  <div className="form-grid">
-                    <Input
-                      label="Certification Name"
-                      placeholder="AWS Certified Solutions Architect"
-                      value={cert.name}
-                      onChange={(value) =>
-                        setResume((prev) => {
-                          const copy = [...prev.certifications];
-                          copy[index] = { ...copy[index], name: value };
-                          return { ...prev, certifications: copy };
-                        })
-                      }
-                    />
-
-                    <Input
-                      label="Issuer"
-                      placeholder="Amazon Web Services"
-                      value={cert.issuer}
-                      onChange={(value) =>
-                        setResume((prev) => {
-                          const copy = [...prev.certifications];
-                          copy[index] = { ...copy[index], issuer: value };
-                          return { ...prev, certifications: copy };
-                        })
-                      }
-                    />
-
-                    <Input
-                      label="Year"
-                      placeholder="2025"
-                      value={cert.year}
-                      onChange={(value) =>
-                        setResume((prev) => {
-                          const copy = [...prev.certifications];
-                          copy[index] = { ...copy[index], year: value };
-                          return { ...prev, certifications: copy };
-                        })
-                      }
-                    />
-                  </div>
+                  <button
+                    className="add-main-button"
+                    onClick={() =>
+                      setResume((prev) => ({
+                        ...prev,
+                        certifications: [
+                          ...prev.certifications,
+                          {
+                            id: crypto.randomUUID(),
+                            name: "",
+                            issuer: "",
+                            year: "",
+                          },
+                        ],
+                      }))
+                    }
+                  >
+                    + Add Certification
+                  </button>
                 </div>
-              ))
+
+                {resume.certifications.length === 0 ? (
+                  <EmptyState
+                    title="No certifications added"
+                    description="Add certifications that strengthen your profile."
+                  />
+                ) : (
+                  resume.certifications.map((cert, index) => (
+                    <div className="form-card" key={cert.id}>
+                      <div className="card-header">
+                        <strong>Certification #{index + 1}</strong>
+
+                        <button
+                          className="remove-link"
+                          onClick={() => {
+                            const confirmed = window.confirm("Xóa mục này?");
+                            if (!confirmed) return;
+                            setResume((prev) => ({
+                              ...prev,
+                              certifications: prev.certifications.filter(
+                                (_, i) => i !== index
+                              ),
+                            }));
+                          }}
+                        >
+                          Remove
+                        </button>
+                      </div>
+
+                      <div className="form-grid">
+                        <Input
+                          label="Certification Name"
+                          placeholder="AWS Certified Solutions Architect"
+                          value={cert.name}
+                          onChange={(value) =>
+                            setResume((prev) => {
+                              const copy = [...prev.certifications];
+                              copy[index] = { ...copy[index], name: value };
+                              return { ...prev, certifications: copy };
+                            })
+                          }
+                        />
+
+                        <Input
+                          label="Issuer"
+                          placeholder="Amazon Web Services"
+                          value={cert.issuer}
+                          onChange={(value) =>
+                            setResume((prev) => {
+                              const copy = [...prev.certifications];
+                              copy[index] = { ...copy[index], issuer: value };
+                              return { ...prev, certifications: copy };
+                            })
+                          }
+                        />
+
+                        <Input
+                          label="Year"
+                          placeholder="2025"
+                          value={cert.year}
+                          onChange={(value) =>
+                            setResume((prev) => {
+                              const copy = [...prev.certifications];
+                              copy[index] = { ...copy[index], year: value };
+                              return { ...prev, certifications: copy };
+                            })
+                          }
+                        />
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             )}
-          </div>
-        )}
           </div>
         </section>
 
