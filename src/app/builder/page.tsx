@@ -327,51 +327,64 @@ function ResumeBuilder() {
   async function handleImportFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-     // DEBUG TẠM — xem thông tin file thật trên mobile
-  alert(
-    `File: ${file.name}\nType: ${file.type}\nSize: ${file.size} bytes`
-  );
-
+  
+    // DEBUG TẠM — xem thông tin file thật trên mobile
+    alert(
+      `File: ${file.name}\nType: ${file.type}\nSize: ${file.size} bytes`
+    );
+  
     const confirmed = window.confirm(
       "Import CV sẽ ghi đè toàn bộ nội dung đang có trên form. Bạn có muốn tiếp tục?"
     );
-
+  
     if (!confirmed) {
       e.target.value = "";
       return;
     }
-
+  
     try {
       setImporting(true);
-
+  
       const formData = new FormData();
       formData.append("file", file);
-
+  
       const response = await fetch("/api/resumes/import", {
         method: "POST",
         body: formData,
       });
-       // DEBUG TẠM — xem status thật
-    console.log("Response status:", response.status);
-
-      const data = await response.json();
-
+  
+      // DEBUG TẠM — xem status thật
+      console.log("Response status:", response.status);
+  
+      let data;
+      let rawText = "";
+  
+      try {
+        rawText = await response.text();
+        data = JSON.parse(rawText);
+      } catch (parseErr) {
+        alert(
+          `Không parse được JSON.\nStatus: ${response.status}\nRaw response (200 ký tự đầu): ${rawText.slice(0, 200)}`
+        );
+        throw new Error("Server trả về dữ liệu không hợp lệ.");
+      }
+  
       if (!response.ok) {
         throw new Error(data?.message || "Không thể import CV.");
       }
-
+  
       setResume(data);
-
+  
       alert(
         "Import CV thành công! Vui lòng kiểm tra lại thông tin trước khi lưu."
       );
       setActiveTab("personal");
     } catch (error) {
       console.error("Import error:", error);
-
+  
       const message =
         error instanceof Error ? error.message : "Không thể import CV.";
-
+  
       alert(`Lỗi: ${message}`);
     } finally {
       setImporting(false);
