@@ -327,6 +327,10 @@ function ResumeBuilder() {
   async function handleImportFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
+     // DEBUG TẠM — xem thông tin file thật trên mobile
+  alert(
+    `File: ${file.name}\nType: ${file.type}\nSize: ${file.size} bytes`
+  );
 
     const confirmed = window.confirm(
       "Import CV sẽ ghi đè toàn bộ nội dung đang có trên form. Bạn có muốn tiếp tục?"
@@ -347,6 +351,8 @@ function ResumeBuilder() {
         method: "POST",
         body: formData,
       });
+       // DEBUG TẠM — xem status thật
+    console.log("Response status:", response.status);
 
       const data = await response.json();
 
