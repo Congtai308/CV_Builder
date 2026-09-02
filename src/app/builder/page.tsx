@@ -17,8 +17,7 @@ import { defaultResume } from "@/lib/resume/defaultResume";
 import { ResumeData } from "@/lib/resume/types";
 
 import ResumePreview from "@/components/resume/ResumePreview";
-import PDFPreview from "@/components/resume/PDFPreview";
-
+import dynamic from "next/dynamic";
 type Tab =
   | "personal"
   | "summary"
@@ -51,7 +50,10 @@ function ResumeBuilder() {
   const [savedId, setSavedId] = useState<string | null>(resumeId);
 
   const [isMobile, setIsMobile] = useState(false);
-
+  const PDFPreview = dynamic(
+    () => import("@/components/resume/PDFPreview"),
+    { ssr: false }
+  );
   useEffect(() => {
     function checkMobile() {
       setIsMobile(window.innerWidth <= 850);

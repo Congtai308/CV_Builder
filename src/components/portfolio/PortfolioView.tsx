@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import PortfolioBackground from "@/components/portfolio/PortfolioBackground";
 import FloatingResume from "@/components/portfolio/FloatingResume";
-import PDFPreview from "@/components/resume/PDFPreview";
+import dynamic from "next/dynamic";
 import { ResumeData } from "@/lib/resume/types";
 interface Props {
   resume: ResumeData;
@@ -13,7 +13,10 @@ interface Props {
 
 export default function PortfolioView({ resume }: Props) {
   const [previewMode, setPreviewMode] = useState<"web" | "pdf">("web");
-
+  const PDFPreview = dynamic(
+    () => import("@/components/resume/PDFPreview"),
+    { ssr: false }
+  );
   return (
     <main className="portfolio-page">
       <PortfolioBackground />
