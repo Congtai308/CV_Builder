@@ -327,64 +327,64 @@ function ResumeBuilder() {
   async function handleImportFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-  
+
     // DEBUG TẠM — xem thông tin file thật trên mobile
-    alert(
-      `File: ${file.name}\nType: ${file.type}\nSize: ${file.size} bytes`
-    );
-  
+    alert(`File: ${file.name}\nType: ${file.type}\nSize: ${file.size} bytes`);
+
     const confirmed = window.confirm(
       "Import CV sẽ ghi đè toàn bộ nội dung đang có trên form. Bạn có muốn tiếp tục?"
     );
-  
+
     if (!confirmed) {
       e.target.value = "";
       return;
     }
-  
+
     try {
       setImporting(true);
-  
+
       const formData = new FormData();
       formData.append("file", file);
-  
+
       const response = await fetch("/api/resumes/import", {
         method: "POST",
         body: formData,
       });
-  
+
       // DEBUG TẠM — xem status thật
       console.log("Response status:", response.status);
-  
+
       let data;
       let rawText = "";
-  
+
       try {
         rawText = await response.text();
         data = JSON.parse(rawText);
       } catch (parseErr) {
         alert(
-          `Không parse được JSON.\nStatus: ${response.status}\nRaw response (200 ký tự đầu): ${rawText.slice(0, 200)}`
+          `Không parse được JSON.\nStatus: ${
+            response.status
+          }\nRaw response (200 ký tự đầu): ${rawText.slice(0, 200)}`
         );
         throw new Error("Server trả về dữ liệu không hợp lệ.");
       }
-  
+
       if (!response.ok) {
         throw new Error(data?.message || "Không thể import CV.");
       }
-  
+
       setResume(data);
-  
+
       alert(
         "Import CV thành công! Vui lòng kiểm tra lại thông tin trước khi lưu."
       );
       setActiveTab("personal");
     } catch (error) {
       console.error("Import error:", error);
-  
+
       const message =
         error instanceof Error ? error.message : "Không thể import CV.";
-  
+
       alert(`Lỗi: ${message}`);
     } finally {
       setImporting(false);
@@ -472,30 +472,31 @@ function ResumeBuilder() {
       const blob = await pdf(<ResumePDF resume={resume} />).toBlob();
 
       const url = URL.createObjectURL(blob);
-      const isMobileDevice =
-      /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(
+        navigator.userAgent
+      );
 
-    if (isMobileDevice) {
-      // Trên mobile, mở PDF trong tab mới — trình duyệt sẽ tự cho phép
-      // người dùng bấm nút "Chia sẻ" / "Lưu" từ trình xem PDF gốc.
-      window.open(url, "_blank");
-    } else {
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `${resume.personal.name || "Resume"}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      if (isMobileDevice) {
+        // Trên mobile, mở PDF trong tab mới — trình duyệt sẽ tự cho phép
+        // người dùng bấm nút "Chia sẻ" / "Lưu" từ trình xem PDF gốc.
+        window.open(url, "_blank");
+      } else {
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${resume.personal.name || "Resume"}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+      }, 10000);
+    } catch (error) {
+      console.error("Download PDF error:", error);
+      alert("Không thể tải PDF. Vui lòng thử lại.");
     }
-
-    setTimeout(() => {
-      URL.revokeObjectURL(url);
-    }, 10000);
-  } catch (error) {
-    console.error("Download PDF error:", error);
-    alert("Không thể tải PDF. Vui lòng thử lại.");
   }
-}
 
   // xu ly keo tha
   function startResizing() {
@@ -597,7 +598,10 @@ function ResumeBuilder() {
 
       <header className="builder-header no-print">
         <div className="builder-header-left">
-          <button className="back-button" onClick={() => router.push("/page.tsx")}>
+          <button
+            className="back-button"
+            onClick={() => router.push("/")}
+          >
             <HiArrowLeft />
           </button>
 
@@ -1523,9 +1527,7 @@ function ResumeBuilder() {
             {previewMode === "web" ? (
               <ResumePreview resume={resume} />
             ) : (
-              <div className="pdf-preview-wrapper">
-                <PDFPreview resume={resume} />
-              </div>
+              <PDFPreview resume={resume} />
             )}
           </div>
         </section>

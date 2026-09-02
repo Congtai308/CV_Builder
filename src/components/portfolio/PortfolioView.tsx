@@ -19,52 +19,44 @@ export default function PortfolioView({ resume }: Props) {
       <PortfolioBackground />
 
       <header className="portfolio-toolbar">
+        <div className="portfolio-toolbar-left">
+          <Link href="/builder" className="portfolio-cta-inline">
+            + Tạo CV
+          </Link>
 
-  <div className="portfolio-toolbar-left">
-    <Link href="/builder" className="portfolio-cta-inline">
-      + Tạo CV
-    </Link>
+          <Link href="/huong-dan" className="portfolio-guide-link">
+            Hướng dẫn
+          </Link>
+        </div>
 
-    <Link href="/huong-dan" className="portfolio-guide-link">
-      Hướng dẫn
-    </Link>
-  </div>
+        <h1 className="portfolio-brand">PORTFOLIO</h1>
 
-  <h1 className="portfolio-brand">PORTFOLIO</h1>
+        <div className="portfolio-mode-toggle">
+          <button
+            className={
+              previewMode === "web" ? "portfolio-mode active" : "portfolio-mode"
+            }
+            onClick={() => setPreviewMode("web")}
+          >
+            Web Preview
+          </button>
 
-  <div className="portfolio-mode-toggle">
-    <button
-      className={
-        previewMode === "web"
-          ? "portfolio-mode active"
-          : "portfolio-mode"
-      }
-      onClick={() => setPreviewMode("web")}
-    >
-      Web Preview
-    </button>
-
-    <button
-      className={
-        previewMode === "pdf"
-          ? "portfolio-mode active"
-          : "portfolio-mode"
-      }
-      onClick={() => setPreviewMode("pdf")}
-    >
-      PDF View
-    </button>
-  </div>
-
-</header>
+          <button
+            className={
+              previewMode === "pdf" ? "portfolio-mode active" : "portfolio-mode"
+            }
+            onClick={() => setPreviewMode("pdf")}
+          >
+            PDF View
+          </button>
+        </div>
+      </header>
 
       <div className="portfolio-content">
         {previewMode === "web" ? (
           <FloatingResume resume={resume} />
         ) : (
-          <div className="portfolio-pdf-wrapper">
             <PDFPreview resume={resume} />
-          </div>
         )}
       </div>
     </main>
