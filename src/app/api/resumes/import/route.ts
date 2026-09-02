@@ -163,7 +163,7 @@ if (rawText.length > 8000) {
       model: "gemini-3.6-flash",
       generationConfig: {
         responseMimeType: "application/json",
-        maxOutputTokens: 3000,
+        maxOutputTokens: 8192,
         temperature: 0.2,
       },
     });
@@ -185,15 +185,22 @@ if (rawText.length > 8000) {
         .replace(/^```\s*/i, "")
         .replace(/```\s*$/i, "")
         .trim();
-
+    
       extractedData = JSON.parse(cleaned);
     } catch (parseError) {
-      console.error("JSON parse error:", parseError, responseText);
-
+      console.error(
+        "JSON parse error:",
+        parseError,
+        "Response length:",
+        responseText.length,
+        "Last 200 chars:",
+        responseText.slice(-200)
+      );
+    
       return NextResponse.json(
         {
           message:
-            "AI trả về dữ liệu không đúng định dạng. Vui lòng thử lại.",
+            "CV của bạn có nội dung khá dài, AI chưa xử lý hết được. Vui lòng thử lại hoặc rút gọn bớt nội dung PDF.",
         },
         { status: 502 }
       );
