@@ -17,7 +17,7 @@ import { defaultResume } from "@/lib/resume/defaultResume";
 import { ResumeData } from "@/lib/resume/types";
 
 import ResumePreview from "@/components/resume/ResumePreview";
-import dynamic from "next/dynamic";
+import PDFPreview from "@/components/resume/PDFPreview";
 
 type Tab =
   | "personal"
